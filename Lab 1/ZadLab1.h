@@ -16,7 +16,7 @@ struct MyNode
 	MyNode(Type _val) : value(_val), next(nullptr) {}
 };
 
-// TODO: список
+// список
 template <class Type = Student>
 struct MyList {
 	struct MyNode<Type>* first; // указатель на первый эл-т списка
@@ -85,23 +85,38 @@ struct MyList {
 		}
 	}
 
-	// TODO: поиск по номеру зачетки
-	MyNode<Type> FindNode(int numberCreditBokk) {
+	// поиск по номеру зачетки
+	void FindNode(int numberCreditBook) {
 		MyNode<Type>* p = first;
 		if (is_empty())
 		{
 			cout << "Список пуст!" << endl;
-			return nullptr;
 		}
 
 		// если тип списка не объекты студенты
 		if (typeid(this->first->value) != typeid(Student&))
 		{
 			cout << "Список не тот!" << endl;
-			return nullptr;
 		}
 		else {
-			
+			bool isShowed = false; // был ли найден студент
+			while (p)
+			{
+				
+				if (p->value.ReturnNumberCreditBook() == numberCreditBook)
+				{
+					p->value.ShowInf();
+					isShowed = true;
+				}
+
+				cout << endl;
+				p = p->next;
+			}
+
+			if (!isShowed)
+			{
+				cout << "Такого в списке нет!" << endl;
+			}
 		}
 	}
 };

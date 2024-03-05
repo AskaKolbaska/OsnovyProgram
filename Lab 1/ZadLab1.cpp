@@ -90,7 +90,3 @@ Student CreateOneStudent() {
 
 	return exampleStudent;
 }
-
-// TODO: удаление элемента из списка
-
-// TODO: поиск по списку

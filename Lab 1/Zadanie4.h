@@ -120,6 +120,11 @@ public:
 			scholarship = false; // нет стипендии
 		}
 	}
+
+	// возврат номера зачетки
+	int ReturnNumberCreditBook() {
+		return this->numberCreditBook;
+	}
 };
 
 // создание нового студента вручную
