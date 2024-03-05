@@ -85,6 +85,18 @@ struct MyList {
 		}
 	}
 
+	// печать первого элемента
+	void print_first() {
+		MyNode<Type>* p = first;
+		if (is_empty())
+		{
+			cout << "Список пуст!" << endl;
+		}
+		else if (typeid(p->value) == typeid(Student&)) {
+			p->value.ShowInf();
+		}
+	}
+
 	// поиск по номеру зачетки
 	void FindNode(int numberCreditBook) {
 		MyNode<Type>* p = first;
@@ -126,6 +138,12 @@ Student CreateOneStudent();
 template <class Type>
 MyList<Type> CreateList();
 
+template <class Type>
+void AddElement(MyList<Type>*);
+
+template <class Type>
+void RemoveFirstElement(MyList<Type>*);
+
 // создание списка
 template <class Type = Student>
 MyList<Type> CreateList() {
@@ -160,4 +178,40 @@ MyList<Type> CreateList() {
 
 
 	return list;
+}
+
+// добавление элемента в конец списка
+template <class Type = Student>
+void AddElement(MyList<Type>* list) {
+	Type element;
+	if (typeid(Type) == typeid(Student)) {
+		element = CreateOneStudent();
+	}
+	else {
+		
+		cout << "Введите эл-т: ";
+		cin >> element;
+	}
+	
+	list->push_back(element);
+}
+
+template <class Type = Student>
+void RemoveFirstElement(MyList<Type>* list) {
+	int otvet = 0;
+	list->print_first();
+	cout << endl << "Вы точно хотите удалить этот элемент? (1): ";
+	cin >> otvet;
+	switch (otvet)
+	{
+	case 1: {
+		list->remove_first;
+		cout << "Удаление завершено!" << endl;
+		break;
+	}
+	default: {
+		cout << "Удаление отменено!" << endl;
+		break;
+	}
+	}
 }
