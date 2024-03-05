@@ -12,7 +12,7 @@
 #include "Lab1.h"
 #include "Zadanie1.h"
 #include "Zadanie2.h"
-
+#include "ZadLab1.h"
 
 int main()
 {

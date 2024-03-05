@@ -3,6 +3,6 @@
 
 void Lab1()
 {
-    MyList list = CreateList();
+    MyList<Student> list = CreateList<Student>();
     list.print();
 }

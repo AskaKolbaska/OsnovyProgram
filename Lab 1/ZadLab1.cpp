@@ -1,23 +1,6 @@
 #include "Zadanie4.h"
 #include "ZadLab1.h"
 
-// создание списка
-MyList CreateList() {
-	int otvet;
-	MyList list;
-
-	do
-	{
-		// добавление студента в конец списка
-		list.push_back(CreateOneStudent());
-
-		cout << endl << "«акончить ввод студентов? (0) ";
-		cin >> otvet;
-	} while (otvet != 0);
-
-	return list;
-}
-
 // создание одного студента
 Student CreateOneStudent() {
 	int otvet = 0, numberCreditBook = 0;
@@ -107,8 +90,6 @@ Student CreateOneStudent() {
 
 	return exampleStudent;
 }
-
-// TODO: добавление элемента в список
 
 // TODO: удаление элемента из списка
 
