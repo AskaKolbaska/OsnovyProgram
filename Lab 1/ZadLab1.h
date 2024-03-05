@@ -239,13 +239,16 @@ template <class Type>
 void RemoveFirstElement(MyList<Type>*);
 
 template <class Type>
-void RemoveLastElement(MyList<Type>* list);
+void RemoveLastElement(MyList<Type>*);
 
 template <class Type>
-void RemoveElementByIndex(MyList<Type>* list);
+void RemoveElementByIndex(MyList<Type>*);
 
 template <class Type>
-void FindByCreditBook(MyList<Type>* list);
+void FindByCreditBook(MyList<Type>*);
+
+template <class Type>
+void WriteList(MyList<Type>);
 
 // ФУНКЦИИ //
 
@@ -384,4 +387,34 @@ void FindByCreditBook(MyList<Type>* list) {
 	cin >> otvet;
 
 	list->FindNode(otvet);
+}
+
+// запись списка в файл
+template <class Type = Student>
+void WriteList(MyList<Type>* list) {
+	ofstream in("list.txt"); // открытие файла для перезаписи
+	if (in.is_open())
+	{
+		MyNode<Type>* p = list->first;
+		if (list->is_empty())
+		{
+			cout << "Список пуст!" << endl;
+			return;
+		}
+		else if (typeid(p->value) == typeid(Student&)) { // если тип элемента в узле является экземпляром класса Студент, то вызывается метод класса
+			while (p)
+			{
+				in << p->value.StrForWrite();
+				p = p->next;
+				in << endl;
+			}
+
+		}
+	}
+	else
+	{
+		cout << "Ошибка записи!" << endl;
+	}
+	cout << "Запись завершена!" << endl;
+	in.close();
 }
