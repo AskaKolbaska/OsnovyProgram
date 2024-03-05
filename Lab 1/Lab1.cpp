@@ -9,7 +9,7 @@ void Lab1()
     // TODO: выбор действий со списком
     do
     {
-        cout << "Выберите действие со списком:" << endl
+        cout << endl << "Выберите действие со списком:" << endl << endl
             << "Добавление нового элемента в конец списка (1)" << endl
             << "Удаление первого элемента (2)" << endl
             << "Удаление последнего элемента (3)" << endl
@@ -33,26 +33,27 @@ void Lab1()
         }
         // удаление последнего эл-та
         case 3: {
-
+            RemoveLastElement<Student>(&list);
+            break;
         }
         // удаление эл-та по номеру списка
         case 4: {
-
+            RemoveElementByIndex<Student>(&list);
+            break;
         }
         // Поиск по списку по номеру зачетной книжки
         case 5: {
-            
+            FindByCreditBook<Student>(&list);
+            break;
         }
         // Показать весь список
         case 6: {
             list.print();
+            break;
         }
         default:
             cout << "Я не знаю такого ответа!" << endl;
             break;
         }
     } while (otvet != 0);
-
-    cout << "Вывод студента с зачеткой 123" << endl << endl;
-    list.FindNode(123);
 }

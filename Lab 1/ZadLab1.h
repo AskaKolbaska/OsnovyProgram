@@ -29,6 +29,50 @@ struct MyList {
 		return first == nullptr;
 	}
 
+	// получение кол-ва элементов списка
+	int size_list() {
+		int size = 0;
+		MyNode<Type>* p = first;
+		if (is_empty())
+		{
+			cout << "Список пуст!" << endl;
+			return size;
+		}
+		else {
+			while (p)
+			{
+				size++;
+				p = p->next;
+			}
+			return size;
+		}	
+	}
+
+	// получение номера элемента в списке
+	int index_element(MyNode<Type>* element) {
+		int index = -1;
+		MyNode<Type>* p = first;
+		if (is_empty())
+		{
+			cout << "Список пуст!" << endl;
+			return index;
+		}
+		else {
+			while (p)
+			{
+				if (element != p)
+				{
+					index++;
+					p = p->next;
+				}
+				else {
+					break;
+				}
+			}
+			return index;
+		}
+	}
+
 	// добавление эл-та в конец списка
 	void push_back(Type _val) {
 		MyNode<Type>* p = new MyNode<Type>(_val);
@@ -48,7 +92,7 @@ struct MyList {
 	// удаление первого элемента
 	void remove_first() {
 		if (is_empty()) return;
-		MyNode* p = first;
+		MyNode<Type>* p = first;
 		first = p->next;
 		delete p;
 	}
@@ -60,7 +104,7 @@ struct MyList {
 			remove_first();
 			return;
 		}
-		MyNode* p = first;
+		MyNode<Type>* p = first;
 		while (p->next != last) p = p->next;
 		p->next = nullptr;
 		delete last;
@@ -69,6 +113,7 @@ struct MyList {
 
 	// печать всего списка
 	void print() {
+		cout << endl << "Список:" << endl << endl;
 		MyNode<Type>* p = first;
 		if (is_empty())
 		{
@@ -95,6 +140,45 @@ struct MyList {
 		else if (typeid(p->value) == typeid(Student&)) {
 			p->value.ShowInf();
 		}
+	}
+
+	// печать последнего элемента
+	void print_last() {
+		MyNode<Type>* p = last;
+		if (is_empty())
+		{
+			cout << "Список пуст!" << endl;
+		}
+		else if (typeid(p->value) == typeid(Student&)) {
+			p->value.ShowInf();
+		}
+	}
+
+	// удаление эл-та по индексу
+	void remove(int index) {
+		if (is_empty()) return;
+		
+		if (index == 0)
+		{
+			remove_first();
+			return;
+		}
+		else if (index == this->size_list())
+		{
+			remove_last();
+			return;
+		}
+
+		MyNode<Type>* slow = first;
+		MyNode<Type>* fast = first->next;
+		
+		while (fast && this->index_element(fast) != index) {
+			fast = fast->next;
+			slow = slow->next;
+		}
+		
+		slow->next = fast->next;
+		delete fast;
 	}
 
 	// поиск по номеру зачетки
@@ -131,6 +215,16 @@ struct MyList {
 			}
 		}
 	}
+
+	MyNode<Type>* operator[] (const int index) {
+		if (is_empty()) return nullptr;
+		MyNode<Type>* p = first;
+		for (int i = 0; i < index; i++) {
+			p = p->next;
+			if (!p) return nullptr;
+		}
+		return p;
+	}
 };
 
 Student CreateOneStudent();
@@ -143,6 +237,17 @@ void AddElement(MyList<Type>*);
 
 template <class Type>
 void RemoveFirstElement(MyList<Type>*);
+
+template <class Type>
+void RemoveLastElement(MyList<Type>* list);
+
+template <class Type>
+void RemoveElementByIndex(MyList<Type>* list);
+
+template <class Type>
+void FindByCreditBook(MyList<Type>* list);
+
+// ФУНКЦИИ //
 
 // создание списка
 template <class Type = Student>
@@ -183,19 +288,14 @@ MyList<Type> CreateList() {
 // добавление элемента в конец списка
 template <class Type = Student>
 void AddElement(MyList<Type>* list) {
-	Type element;
+	cout << endl << "Добавление нового элемента!" << endl << endl;
 	if (typeid(Type) == typeid(Student)) {
-		element = CreateOneStudent();
+		Type element = CreateOneStudent();
+		list->push_back(element);
 	}
-	else {
-		
-		cout << "Введите эл-т: ";
-		cin >> element;
-	}
-	
-	list->push_back(element);
 }
 
+// удаление первого элемента
 template <class Type = Student>
 void RemoveFirstElement(MyList<Type>* list) {
 	int otvet = 0;
@@ -205,7 +305,7 @@ void RemoveFirstElement(MyList<Type>* list) {
 	switch (otvet)
 	{
 	case 1: {
-		list->remove_first;
+		list->remove_first();
 		cout << "Удаление завершено!" << endl;
 		break;
 	}
@@ -214,4 +314,74 @@ void RemoveFirstElement(MyList<Type>* list) {
 		break;
 	}
 	}
+}
+
+// удаление последнего элемента
+template <class Type = Student>
+void RemoveLastElement(MyList<Type>* list) {
+	int otvet = 0;
+	list->print_last();
+	cout << endl << "Вы точно хотите удалить этот элемент? (1): ";
+	cin >> otvet;
+	switch (otvet)
+	{
+	case 1: {
+		list->remove_last();
+		cout << "Удаление завершено!" << endl;
+		break;
+	}
+	default: {
+		cout << "Удаление отменено!" << endl;
+		break;
+	}
+	}
+}
+
+// удаление элемента по номеру списка
+template <class Type = Student>
+void RemoveElementByIndex(MyList<Type>* list) {
+	int size = list->size_list();
+	int otvet = 0;
+	int index = 0;
+	cout << "Размер списка: " << size << endl;
+
+	do
+	{
+		cout << "Введите номер элемента для удаления: ";
+		cin >> index;
+
+		if (index <= 0 || index > size)
+		{
+			cout << "Неправильно выбран номер элемента!" << endl;
+		}
+		else {
+			cout<< "Вы точно хотите удалить этот элемент? (1): ";
+			cin >> otvet;
+
+			switch (otvet)
+			{
+			case 1: {
+				list->remove(index);
+				cout << "Удаление завершено!" << endl;
+				break;
+			}
+			default: {
+				cout << "Удаление отменено!" << endl;
+				break;
+			}
+			}
+			break;
+		}
+	} while (true);
+	
+}
+
+// поиск по номеру зачетки
+template <class Type = Student>
+void FindByCreditBook(MyList<Type>* list) {
+	int otvet = 0;
+	cout << "Введите номер зачетки: ";
+	cin >> otvet;
+
+	list->FindNode(otvet);
 }

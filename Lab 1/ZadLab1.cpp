@@ -3,6 +3,7 @@
 
 // создание одного студента
 Student CreateOneStudent() {
+	SetConsoleCP(1251);
 	int otvet = 0, numberCreditBook = 0;
 	string newSurname, newFatherName;
 	bool luckySession;
