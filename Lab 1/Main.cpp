@@ -9,6 +9,7 @@
 #include "Pr4.h"
 #include "Pr5.h"
 #include "Pr6.h"
+#include "Pr7.h"
 #include "Lab1.h"
 #include "Zadanie1.h"
 #include "Zadanie2.h"
@@ -75,6 +76,10 @@ int main()
             case 6:
             {
                 Pr6();
+                break;
+            }
+            case 7: {
+                Pr7();
                 break;
             }
             default:

@@ -136,6 +136,7 @@
     <ClCompile Include="Pr6.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Pr7.cpp" />
     <ClCompile Include="Zadanie1.cpp" />
     <ClCompile Include="Zadanie2.cpp" />
     <ClCompile Include="Zadanie3.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Pr5.h" />
     <ClInclude Include="Pr6.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pr7.h" />
     <ClInclude Include="Zadanie1.h" />
     <ClInclude Include="Zadanie2.h" />
     <ClInclude Include="Zadanie3.h" />

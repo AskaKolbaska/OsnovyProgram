@@ -233,6 +233,9 @@ template <class Type>
 MyList<Type> CreateList();
 
 template <class Type>
+MyList<Type> CreateList(vector<Type>);
+
+template <class Type>
 void AddElement(MyList<Type>*);
 
 template <class Type>
@@ -285,6 +288,17 @@ MyList<Type> CreateList() {
 	}
 
 
+	return list;
+}
+
+// создание списка
+template <class Type = Student>
+MyList<Type> CreateList(vector<Type> data) {
+	MyList<Type> list;
+	for (int i = 0; i < data.size(); i++)
+	{
+		list.push_back(data[i]);
+	}
 	return list;
 }
 

@@ -6,7 +6,7 @@ void Lab1()
     MyList<Student> list = CreateList<Student>();
     int otvet = 0;
     
-    // TODO: выбор действий со списком
+    // выбор действий со списком
     do
     {
         cout << endl << "Выберите действие со списком:" << endl << endl
