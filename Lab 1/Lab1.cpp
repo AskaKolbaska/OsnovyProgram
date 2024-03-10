@@ -49,7 +49,7 @@ void Lab1()
         }
         // Показать весь список
         case 6: {
-            list.print();
+            list.is_printed();
             break;
         }
         // сохранение списка в файл

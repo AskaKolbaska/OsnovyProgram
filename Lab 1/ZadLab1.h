@@ -112,23 +112,66 @@ struct MyList {
 	}
 
 	// печать всего списка
-	void print() {
+	//void print() {
+	//	cout << endl << "Список:" << endl << endl;
+	//	MyNode<Type>* p = first;
+	//	if (is_empty())
+	//	{
+	//		cout << "Список пуст!" << endl;
+	//	}
+	//	else if (IsTypeStudent(this)) { // если тип элемента в узле является экземпляром класса Студент, то вызывается метод класса
+	//		while (p)
+	//		{
+	//			p->value.ShowInf();
+	//			cout << endl;
+	//			p = p->next;
+	//		}
+	//	}
+	//	else if (enable_if_t<!is_same_v<Type, Student>, bool>) {
+	//		while (p)
+	//		{
+	//			cout << p->value << endl;
+	//			p = p->next;
+	//		}
+	//	}
+	//}
+
+	enable_if_t<is_same_v<Type, Student>, bool> is_printed() {
 		cout << endl << "Список:" << endl << endl;
 		MyNode<Type>* p = first;
 		if (is_empty())
 		{
 			cout << "Список пуст!" << endl;
+			return false;
 		}
-		else if (typeid(p->value) == typeid(Student&)) { // если тип элемента в узле является экземпляром класса Студент, то вызывается метод класса
+		else {
 			while (p)
 			{
 				p->value.ShowInf();
 				cout << endl;
 				p = p->next;
 			}
-			
+			return true;
 		}
 	}
+
+	/*enable_if_t<!is_same_v<Type, Student>, bool> is_printed() {
+		cout << endl << "Список:" << endl << endl;
+		MyNode<Type>* p = first;
+		if (is_empty())
+		{
+			cout << "Список пуст!" << endl;
+			return false;
+		}
+		else {
+			while (p)
+			{
+				cout << p->value << endl;
+				p = p->next;
+			}
+			return true;
+		}
+	}*/
 
 	// печать первого элемента
 	void print_first() {
@@ -216,7 +259,7 @@ struct MyList {
 		}
 	}
 
-	MyNode<Type>* operator[] (const int index) {
+	MyNode<Type>* find_el(const int index) {
 		if (is_empty()) return nullptr;
 		MyNode<Type>* p = first;
 		for (int i = 0; i < index; i++) {
@@ -226,6 +269,15 @@ struct MyList {
 		return p;
 	}
 };
+
+template <class Type>
+constexpr enable_if_t<is_same_v<Type, Student>, bool> IsTypeStudent(MyList<Type>*);
+
+//template <class Type>
+//constexpr enable_if_t<!is_same_v<Type, Student>, bool> IsTypeStudent(MyList<Type>*);
+
+template <class Type>
+void PrintList(MyList<Type>*);
 
 Student CreateOneStudent();
 
@@ -254,6 +306,61 @@ template <class Type>
 void WriteList(MyList<Type>);
 
 // ФУНКЦИИ //
+
+// является ли список студентами
+template <class Type>
+constexpr enable_if_t<is_same_v<Type, Student>, bool> IsTypeStudent(MyList<Type> list) {
+	return true;
+}
+
+//template <class Type>
+//constexpr enable_if_t<!is_same_v<Type, Student>, bool> IsTypeStudent(MyList<Type> list) {
+//	return false;
+//}
+
+template <class Type>
+void PrintList(MyList<Type>* list) {
+	if (IsTypeStudent(list))
+	{
+		MyNode<Type>* p = list->first;
+		if (list->is_empty())
+		{
+			cout << "Список пуст!" << endl;
+		}
+		else
+		{
+			for (int i = 0; i < list->size_list(); i++)
+			{
+				
+				cout << endl;
+				p->next;
+			}
+
+			//while (p)
+			//{
+			//	list.p->value.ShowInf();
+			//	cout << endl;
+			//	p->next;
+			//}
+		}
+	}
+	else
+	{
+		MyNode<Type>* p = list->first;
+		if (list->is_empty())
+		{
+			cout << "Список пуст!" << endl;
+		}
+		else
+		{
+			while (p)
+			{
+				cout << p->value << endl;
+				p->next;
+			}
+		}
+	}
+}
 
 // создание списка
 template <class Type = Student>

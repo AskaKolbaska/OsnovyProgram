@@ -14,7 +14,7 @@ void Pr7() {
 		vector<int> data = CreateData<int>(); // создание вектора данных для ввода в список
 		MyList<int> list_int = CreateList<int>(data); // внос данных из вектора в список
 
-
+		list_int.print();
 
 		break;
 	}
